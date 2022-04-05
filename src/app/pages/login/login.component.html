@@ -26,7 +26,10 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                 </div>
-                <input class="form-control" placeholder="Correo" type="email" formControlName="correo">
+                <input class="form-control" placeholder="Correo" pattern="{{patronVerificar}}" type="email" formControlName="correo">
+                <div *ngIf=" form.controls['correo'].invalid && (form.controls['correo'].dirty || form.controls['correo'].touched)">
+                  <span style="color: red;"> Formato invalido! EJ: nombreemail@agroonline.com</span>
+                </div>
               </div>
             </div>
             <div class="form-group">
@@ -34,8 +37,13 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                 </div>
-                <input class="form-control" placeholder="Contraseña" type="password"
+                <input class="form-control" placeholder="Contraseña" pattern="{{patronPassword}}" type="password" minlength="6"
                        formControlName="contrasena" (keydown.enter)="iniciarSesion()">
+                <div *ngIf=" form.controls['contrasena'].invalid && (form.controls['contrasena'].dirty || form.controls['contrasena'].touched)">
+                <span style="color: red;"> Su contraseña debe contener mínimo 6 y máximo 12
+                                           caracteres, debe incluir por lo menos un número,
+                                           una mayúscula y minúscula: Eje Agroon1 </span>
+                </div>
               </div>
             </div>
             <div class="text-center">

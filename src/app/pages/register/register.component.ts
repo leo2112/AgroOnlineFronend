@@ -14,13 +14,15 @@ import {ToastServiceService} from '../../share/servicios/toast-service.service';
 export class RegisterComponent implements OnInit {
   public urlLogin = URL_LOGIN;
   public form: FormGroup;
+  private patronEmail = '^[^@]+@[^@]+\\.[a-zA-Z]{2,}$';
+ /* private patronPassword = '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}';*/
 
   constructor(private formBuilder: FormBuilder, private usuarioServiceService: UsuarioServiceService,
               private route: Router, public toastServiceService: ToastServiceService) {
     this.form = this.formBuilder.group({
       nombre: [null, Validators.required],
-      correo: [null, [Validators.required, Validators.email]],
-      contrasena: [null, Validators.required]
+      correo: [null, [Validators.required, Validators.pattern(this.patronEmail)]],
+      contrasena: [null, Validators.required, /*Validators.pattern(this.patronPassword)*/]
     });
   }
 
@@ -41,7 +43,7 @@ export class RegisterComponent implements OnInit {
         if (error.status === 0) {
           this.toastServiceService.addSingle('error', 'ERROR:', 'Los servicios no están disponibles');
         } else {
-          this.toastServiceService.addSingle('error', 'ERROR:', error.error.message);
+          this.toastServiceService.addSingle('error', 'ERROR:', 'Correo o contraseña incorrectos');
         }
       });
     }
